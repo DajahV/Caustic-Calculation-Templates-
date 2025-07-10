@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<widget 
+    android-versionCode = '1'
+    id = 'com.SunRise.TEch'
+    version = '1.0'
+    xmlns = 'https://www.w3.org/ns/widgets'>
+
+
+    <name> CaustiCalculation</name>
+    <description>Caustic Mixing Application</description>
+    <author>vinjax2001@gmail.com</author>
+    <icon src="res/media/ico.png" />
+
+    <preference name = 'orientation' value = 'portrait'/>
+</widget>
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+{
+  "name": "caustic-calculator",
+  "version": "1.0.0",
+  "description": "A calculator for caustic soda dilution in bottle washer machines",
+  "main": "www/index.html",
+  "scripts": {
+    "start": "live-server www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "caustic",
+    "calculator",
+    "industrial",
+    "chemistry"
+  ],
+  "author": "Your Name <vinjax2001@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

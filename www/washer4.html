@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NB - Washer Line 4 - Caustic Soda Calculator</title>
+    <link rel="icon" href="../res/media/ico.png" type="image/png">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e1e1e1;
+            text-align: center;
+        }
+
+        .logo {
+            height: 70px;
+            width: auto;
+        }
+
+        .header-box h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        /* Content Layout */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-section {
+            width: 100%;
+        }
+
+        /* Formula Box */
+        .formula-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* Input Form */
+        .input-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .input-group input,
+        .bath-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus,
+        .bath-select:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Calculate Button */
+        .calculate-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .calculate-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Image Section */
+        .image-section {
+            display: none; /* Hidden on mobile by default */
+        }
+
+        .vessel-image {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Results Section */
+        .result-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--success);
+        }
+
+        #calculated-volume {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--success);
+            padding: 10px 0;
+        }
+
+        .blinking-result {
+            animation: blink 1.5s 20;
+        }
+
+        @keyframes blink {
+            0% { background-color: rgba(231, 76, 60, 0.1); }
+            50% { background-color: rgba(231, 76, 60, 0.3); }
+            100% { background-color: rgba(231, 76, 60, 0.1); }
+        }
+
+        #safety-note {
+            font-style: italic;
+            color: var(--accent);
+            padding-top: 10px;
+            border-top: 1px dashed #e1e1e1;
+            margin-top: 15px;
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+            background-color: #f5f7fa;
+        }
+
+        /* Tablet and Desktop Styles */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 1200px;
+                padding: 30px;
+            }
+
+            .header-box {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .content-wrapper {
+                flex-direction: row;
+                gap: 40px;
+            }
+
+            .form-section {
+                width: 60%;
+            }
+
+            .image-section {
+                display: block;
+                width: 40%;
+                position: sticky;
+                top: 20px;
+                align-self: flex-start;
+            }
+        }
+
+        /* Error Message */
+        .error-message {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header-box">
+            <img src="data:image/jpeg;base64,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" alt="NB Logo" class="logo">
+            <h2>Washer Line 4 - Caustic Soda Calculator</h2>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="form-section">
+                <div class="formula-box">
+                    <p>To calculate the additional volume \( V_a \), use the formula:</p>
+                    <p>\[ V_a = \frac{C_f V_1 - C_1 V_1}{C_a} \]</p>
+                </div>
+
+                <div class="input-form">
+                    <div class="input-group">
+                        <label for="caustic-bath">Select the caustic bath:</label>
+                        <select id="caustic-bath" class="bath-select">
+                            <option value="">-- Select --</option>
+                            <option value="295">Caustic Bath 1</option>
+                            <option value="495">Caustic Bath 2 & 3</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="initial-concentration">Initial Concentration (C₁) %</label>
+                        <input type="number" id="initial-concentration" step="0.1" min="0" max="3" required>
+                        <div class="error-message" id="c1-error">Please enter a value between 0-3%</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="initial-volume">Initial Volume (V₁) Hl</label>
+                        <input type="number" id="initial-volume" step="0.1" disabled>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="final-concentration">Desired Final Concentration (Cf) %</label>
+                        <input type="number" id="final-concentration" step="0.1" min="0" max="4" required>
+                        <div class="error-message" id="cf-error">Please enter a value between 0-4%</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="additional-concentration">Additional Solution Concentration (Ca) %</label>
+                        <input type="number" id="additional-concentration" step="0.1" value="30" min="1" max="50">
+                    </div>
+                    
+                    <button id="calculate-btn" class="calculate-btn">Calculate Additional Volume</button>
+                </div>
+            </div>
+
+            <div class="image-section">
+                <img src="../res/media/vessels 3.jpg" alt="Caustic Soda Vessels" class="vessel-image">
+            </div>
+        </div>
+
+        <div id="result" class="result-box">
+            <h2>Result:</h2>
+            <p id="calculated-volume">Additional Volume (Vₐ) needed: </p>
+            <hr>
+            <p id="safety-note">Note: Always add caustic soda to water, never water to caustic soda.</p>
+        </div>
+
+        <a href="index.html" class="back-link">⬅️ Back to Home</a>
+    </div>
+
+    <script>
+        // Input validation
+        document.getElementById('initial-concentration').addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            const errorElement = document.getElementById('c1-error');
+            if (value < 0 || value > 3) {
+                errorElement.style.display = 'block';
+            } else {
+                errorElement.style.display = 'none';
+            }
+        });
+
+        document.getElementById('final-concentration').addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            const errorElement = document.getElementById('cf-error');
+            if (value < 0 || value > 4) {
+                errorElement.style.display = 'block';
+            } else {
+                errorElement.style.display = 'none';
+            }
+        });
+
+        // Bath selection handler
+        document.getElementById('caustic-bath').addEventListener('change', function() {
+            const selectedValue = this.value;
+            if (selectedValue) {
+                document.getElementById('initial-volume').value = selectedValue;
+            }
+        });
+
+        // Calculation logic
+        document.getElementById('calculate-btn').addEventListener('click', function() {
+            const C1 = parseFloat(document.getElementById('initial-concentration').value);
+            const V1 = parseFloat(document.getElementById('initial-volume').value);
+            const Cf = parseFloat(document.getElementById('final-concentration').value);
+            const Ca = parseFloat(document.getElementById('additional-concentration').value);
+            
+            // Validate inputs
+            if (isNaN(C1) || isNaN(V1) || isNaN(Cf) || isNaN(Ca)) {
+                alert('Please fill in all required fields with valid numbers');
+                return;
+            }
+            
+            if (C1 < 0 || C1 > 3) {
+                document.getElementById('c1-error').style.display = 'block';
+                return;
+            }
+            
+            if (Cf < 0 || Cf > 4) {
+                document.getElementById('cf-error').style.display = 'block';
+                return;
+            }
+            
+            const Va = ((Cf * V1) - (C1 * V1)) / Ca;
+            const resultElement = document.getElementById('calculated-volume');
+            
+            if (Va < 0) {
+                resultElement.textContent = 'Error: Final concentration cannot be less than initial';
+                resultElement.style.color = 'var(--accent)';
+            } else {
+                resultElement.textContent = `Hi, you need to add: ${Va.toFixed(0)} Hl of caustic at ${Ca}% concentration to this compartment`;
+                resultElement.style.color = 'var(--success)';
+                
+                // Add blinking effect
+                resultElement.classList.add('blinking-result');
+                setTimeout(() => {
+                    resultElement.classList.remove('blinking-result');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
